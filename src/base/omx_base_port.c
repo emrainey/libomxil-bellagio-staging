@@ -407,7 +407,7 @@ OMX_ERRORTYPE base_port_AllocateBuffer(
   }
 
   if(nSizeBytes < openmaxStandPort->sPortParam.nBufferSize) {
-    DEBUG(DEB_LEV_ERR, "In %s: Requested Buffer Size %lu is less than Minimum Buffer Size %lu\n", __func__, nSizeBytes, openmaxStandPort->sPortParam.nBufferSize);
+    DEBUG(DEB_LEV_ERR, "In %s: Requested Buffer Size %u is less than Minimum Buffer Size %u\n", __func__, nSizeBytes, openmaxStandPort->sPortParam.nBufferSize);
     return OMX_ErrorIncorrectStateTransition;
   }
 
@@ -829,7 +829,7 @@ OMX_ERRORTYPE base_port_SendBufferFunction(
   unsigned int i;
 #endif
   portIndex = (openmaxStandPort->sPortParam.eDir == OMX_DirInput)?pBuffer->nInputPortIndex:pBuffer->nOutputPortIndex;
-  DEBUG(DEB_LEV_FUNCTION_NAME, "In %s portIndex %lu\n", __func__, portIndex);
+  DEBUG(DEB_LEV_FUNCTION_NAME, "In %s portIndex %u\n", __func__, portIndex);
 
   if (portIndex != openmaxStandPort->sPortParam.nPortIndex) {
     DEBUG(DEB_LEV_ERR, "In %s: wrong port for this operation portIndex=%d port->portIndex=%d\n", __func__, (int)portIndex, (int)openmaxStandPort->sPortParam.nPortIndex);
@@ -848,7 +848,7 @@ OMX_ERRORTYPE base_port_SendBufferFunction(
     return OMX_ErrorIncorrectStateOperation;
   }
   if (!PORT_IS_ENABLED(openmaxStandPort) || (PORT_IS_BEING_DISABLED(openmaxStandPort) && !PORT_IS_TUNNELED_N_BUFFER_SUPPLIER(openmaxStandPort)) ||
-      ((omx_base_component_Private->transientState == OMX_TransStateExecutingToIdle || 
+      ((omx_base_component_Private->transientState == OMX_TransStateExecutingToIdle ||
 	  	omx_base_component_Private->transientState == OMX_TransStatePauseToIdle) &&
       (PORT_IS_TUNNELED(openmaxStandPort) && !PORT_IS_BUFFER_SUPPLIER(openmaxStandPort)))) {
     DEBUG(DEB_LEV_ERR, "In %s: Port %d is disabled comp = %s \n", __func__, (int)portIndex,omx_base_component_Private->name);

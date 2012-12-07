@@ -172,7 +172,7 @@ static int buildComponentsList(FILE* omxregistryfp, char *componentspath, int ve
 	int index;
 	char* currentpath = componentspath;
 	char* actual;
-		int err;
+	size_t nBytes = 0;
 	nameList *allNames = NULL;
 	nameList *currentName = NULL;
 	nameList *tempName = NULL;
@@ -247,8 +247,8 @@ static int buildComponentsList(FILE* omxregistryfp, char *componentspath, int ve
 							stComponents[i]->multiResourceLevel = NULL;
 						}
 						fptr(stComponents);
-						err = fwrite(lib_absolute_path, 1, strlen(lib_absolute_path), omxregistryfp);
-						err = fwrite("\n", 1, 1, omxregistryfp);
+						nBytes += fwrite(lib_absolute_path, 1, strlen(lib_absolute_path), omxregistryfp);
+						nBytes += fwrite("\n", 1, 1, omxregistryfp);
 
 
 						for (i = 0; i<num_of_comp; i++) {
@@ -323,7 +323,7 @@ static int buildComponentsList(FILE* omxregistryfp, char *componentspath, int ve
 							}
 							qualityString[0] = '\0';
 							strcat(buffer, "\n");
-							err = fwrite(buffer, 1, strlen(buffer), omxregistryfp);
+							nBytes += fwrite(buffer, 1, strlen(buffer), omxregistryfp);
 							ncomponents++;
 						}
 						for (i = 0; i < num_of_comp; i++) {
